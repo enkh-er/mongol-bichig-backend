@@ -34,13 +34,13 @@ public class CustomFieldController {
     }
 
 
-    @GetMapping("/custom-fields/{catId}")
+    @GetMapping("/custom-fields-by-cat/{catId}")
     public List<CustomField> getMenus(@PathVariable String catId){
         List<CustomField>fields =new ArrayList<CustomField>();
         List<CustomField> lists=customFieldRepository.findAll();
         for (CustomField cf:lists ) {
             for (String cat:cf.getCategories() ) {
-                if(cat==catId){
+                if(cat.equals(catId)){
                     fields.add(cf);
                 }
             }
@@ -48,7 +48,7 @@ public class CustomFieldController {
         return fields;
     }
 
-    @DeleteMapping("/delete-custom-fields/{id}/{name}")
+    @DeleteMapping("/delete-cf-by-name/{id}/{name}")
     public void deleteCF(@PathVariable String id,@PathVariable String name){
         Query query=new Query();
         query.addCriteria(Criteria.where("id").is(id));
@@ -58,7 +58,7 @@ public class CustomFieldController {
             if(customField.getFields().size()!=0){
                 lists=customField.getFields();
                 for (int i = 0; i < customField.getFields().size(); i++) {
-                    if(customField.getFields().get(i).getName()==name){
+                    if(customField.getFields().get(i).getName().equals(name)){
                         lists.remove(i);
                     }
                 }
@@ -67,7 +67,7 @@ public class CustomFieldController {
                 }
             }
     }
-    @DeleteMapping("/delete-custom-fields/{id}/{catID}")
+    @DeleteMapping("/delete-cf-by-catid/{id}/{catID}")
     public void deleteCat(@PathVariable String id,@PathVariable String catID){
         Query query=new Query();
         query.addCriteria(Criteria.where("id").is(id));
@@ -77,7 +77,7 @@ public class CustomFieldController {
             if(customField.getCategories().size()!=0){
                 lists=customField.getCategories();
                 for (int i = 0; i < customField.getCategories().size(); i++) {
-                    if(customField.getCategories().get(i)==catID){
+                    if(customField.getCategories().get(i).equals(catID)){
                         lists.remove(i);
                     }
                 }
@@ -92,7 +92,7 @@ public class CustomFieldController {
         customFieldRepository.deleteById(id);
     }
 
-    @PostMapping("update-custom-fields")
+    @PostMapping("/update-custom-fields")
     public void update(@ModelAttribute  CustomField customField) throws IOException {
         Query query=new Query();
         query.addCriteria(Criteria.where("id").is(customField.getId()));

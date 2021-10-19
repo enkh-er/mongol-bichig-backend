@@ -1,5 +1,4 @@
 package stud.enkherdene.mongolbichig.model;
-import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
