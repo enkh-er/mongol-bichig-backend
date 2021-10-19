@@ -14,7 +14,9 @@ import stud.enkherdene.mongolbichig.model.Post;
 import stud.enkherdene.mongolbichig.repository.PostRepository;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @CrossOrigin
@@ -32,26 +34,28 @@ public class PostController {
                        @RequestParam("categories") List<String> categories,
                        @RequestParam("content") String content,
                        @RequestParam("link") String link,
-                       @RequestParam("image") MultipartFile image, Model model) throws IOException {
+                         @RequestParam("author") String author,
+                         @RequestParam("date") String date,
+                       @RequestParam(value = "image",required = false) MultipartFile image, Model model) throws IOException {
         Post post=new Post();
         post.setTitle(title);
         post.setContent(content);
         post.setCategories(categories);
+        post.setAuthor(author);
+        post.setDate(date);
         post.setLink(link);
-        Photo photo=new Photo();
-        photo.setName(image.getName());
-        photo.setImage(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
-        post.setPhoto(photo);
-//        System.out.println(post.getContent());
-//        System.out.println(post.getCategories());
-//        System.out.println(post.getImage());
-//        System.out.println(post.getLink());
+        if(image!=null &&!image.isEmpty()){
+            Photo photo=new Photo();
+            photo.setName(image.getName());
+            photo.setImage(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
+            post.setPhoto(photo);
+        }
         Post p=postRepository.save(post);
         return p.getId();
     }
 
     @GetMapping("/posts")
-    public List<Post> getPosts(@ModelAttribute Post post) throws IOException {
+    public List<Post> getPosts() throws IOException {
         return postRepository.findAll();
     }
 
