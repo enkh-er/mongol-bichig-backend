@@ -23,8 +23,7 @@ public class CategoryController {
 
     @PostMapping("/create-category")
     public Category createCategory(@ModelAttribute Category category) throws IOException {
-        Category insertCat=categoryRepository.insert(category);
-        return  insertCat;
+        return  categoryRepository.insert(category);
     }
 
     @PostMapping("/update-category")
@@ -37,7 +36,6 @@ public class CategoryController {
         cat.setLink(category.getLink());
         cat.setParent(category.getParent());
         cat.setDescription(category.getDescription());
-        cat.setImage(category.getImage());
         mongoTemplate.save(cat);
         return cat;
     }

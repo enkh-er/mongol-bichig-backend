@@ -1,7 +1,6 @@
 package stud.enkherdene.mongolbichig.controller;
 
-import org.bson.BsonBinarySubType;
-import org.bson.types.Binary;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -9,13 +8,13 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import stud.enkherdene.mongolbichig.model.Photo;
 import stud.enkherdene.mongolbichig.model.Post;
+import stud.enkherdene.mongolbichig.model.PostCF;
 import stud.enkherdene.mongolbichig.repository.PostRepository;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -36,6 +35,7 @@ public class PostController {
                        @RequestParam("link") String link,
                          @RequestParam("author") String author,
                          @RequestParam("date") String date,
+                         @RequestParam("acf") List<PostCF> acf,
                        @RequestParam(value = "image",required = false) MultipartFile image, Model model) throws IOException {
         Post post=new Post();
         post.setTitle(title);
@@ -44,11 +44,14 @@ public class PostController {
         post.setAuthor(author);
         post.setDate(date);
         post.setLink(link);
+//        ObjectMapper mapper = new ObjectMapper();
+//        List<PostCF> acfs = new ArrayList<>();
+        // 1. convert JSON array to Array objects
+//        PostCF[] pp1 = mapper.readValue(acf, PostCF[].class);
+//        List<PostCF> ppl2 = Arrays.asList(mapper.readValue(acf, PostCF[].class));
+//        post.setAcf(ppl2);
         if(image!=null &&!image.isEmpty()){
-            Photo photo=new Photo();
-            photo.setName(image.getName());
-            photo.setImage(new Binary(BsonBinarySubType.BINARY,image.getBytes()));
-            post.setPhoto(photo);
+            post.setPhoto(Base64.getEncoder().encodeToString(image.getBytes()));
         }
         Post p=postRepository.save(post);
         return p.getId();
@@ -71,6 +74,14 @@ public class PostController {
             }
         }
         return posts;
+    }
+
+    @GetMapping("/post-by-name/{title}")
+    public List<Post> getPostsByName(@PathVariable String title) throws IOException {
+        Query query = new Query();
+        query.limit(10);
+        query.addCriteria(Criteria.where("title").regex(title));
+        return mongoTemplate.find(query,Post.class);
     }
 
     @GetMapping("/post-link/{link}")
