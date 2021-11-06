@@ -25,7 +25,7 @@ public class Post implements Serializable {
     private String date;
     private List<String> categories;
     private String link;
-    private String photo;
+    private String image;
 
     @JsonUnwrapped
     private List<PostCF> acf;

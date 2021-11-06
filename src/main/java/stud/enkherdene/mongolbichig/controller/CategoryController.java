@@ -56,4 +56,14 @@ public class CategoryController {
         return categoryRepository.findById(id);
     }
 
+    @GetMapping("/category-code/{code}")
+    public String getCategoryByCode(@PathVariable String code){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("code").is(code));
+        Category cat=mongoTemplate.findOne(query,Category.class);
+        if(cat!=null){
+            return cat.getId();
+        }
+        return "";
+    }
 }
