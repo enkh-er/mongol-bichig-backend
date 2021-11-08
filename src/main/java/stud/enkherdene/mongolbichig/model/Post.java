@@ -1,6 +1,7 @@
 package stud.enkherdene.mongolbichig.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -27,6 +29,6 @@ public class Post implements Serializable {
     private String link;
     private String image;
 
-    @JsonUnwrapped
-    private List<PostCF> acf;
+    private Map<String, String> acf;
+
 }

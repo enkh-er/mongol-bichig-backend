@@ -16,14 +16,9 @@ import java.io.Serializable;
 @Document
 public class PostCF  implements Serializable {
 
-    @JsonProperty("name")
-    String name;
-
     @JsonProperty("key")
     String key;
 
-    @JsonProperty("type")
-    String type;
 
     @JsonProperty("value")
     String value;
