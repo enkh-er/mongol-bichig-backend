@@ -66,4 +66,15 @@ public class CategoryController {
         }
         return "";
     }
+
+    @GetMapping("/category-link/{link}")
+    public String getCategoryByLink(@PathVariable String link){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("link").is(link));
+        Category cat=mongoTemplate.findOne(query,Category.class);
+        if(cat!=null){
+            return cat.getId();
+        }
+        return "";
+    }
 }
