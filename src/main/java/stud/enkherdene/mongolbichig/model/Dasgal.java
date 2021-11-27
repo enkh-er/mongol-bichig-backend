@@ -27,5 +27,5 @@ public class Dasgal {
     private String code;
 
     @JsonUnwrapped
-    private List<Asuult> asuultList;
+    private List<Asuult> asuultuud;
 }

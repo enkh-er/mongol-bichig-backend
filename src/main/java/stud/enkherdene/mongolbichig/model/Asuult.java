@@ -17,14 +17,14 @@ public class Asuult {
     String asuult;
 
     @JsonProperty("huwilbar_a")
-    String a;
+    String huwilbar_a;
 
     @JsonProperty("huwilbar_b")
-    String b;
+    String huwilbar_b;
 
     @JsonProperty("huwilbar_c")
-    String c;
+    String huwilbar_c;
 
     @JsonProperty("zow_huwilbar")
-    String zow;
+    String zow_huwilbar;
 }
