@@ -56,9 +56,16 @@ public class PostController {
     @GetMapping("/post-by-name/{title}")
     public List<Post> getPostsByName(@PathVariable String title) throws IOException {
         Query query = new Query();
-        query.limit(10);
+        query.limit(30);
         query.addCriteria(Criteria.where("title").regex(title));
         return mongoTemplate.find(query,Post.class);
+    }
+
+    @GetMapping("/post-by-link/{link}")
+    public Post getPostsByLink(@PathVariable String link) throws IOException {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("link").is(link));
+        return mongoTemplate.findOne(query,Post.class);
     }
 
     @GetMapping("/post-link/{link}")

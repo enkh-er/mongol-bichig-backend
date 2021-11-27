@@ -67,6 +67,13 @@ public class CategoryController {
         return "";
     }
 
+    @GetMapping("/category-parent/{parent}")
+    public List<Category> getCategoryByParent(@PathVariable String parent){
+        Query query=new Query();
+        query.addCriteria(Criteria.where("parent").is(parent));
+        return mongoTemplate.find(query,Category.class);
+    }
+
     @GetMapping("/category-link/{link}")
     public String getCategoryByLink(@PathVariable String link){
         Query query=new Query();
