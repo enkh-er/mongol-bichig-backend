@@ -27,4 +27,7 @@ public class Asuult {
 
     @JsonProperty("zow_huwilbar")
     String zow_huwilbar;
+
+    @JsonProperty("helber")
+    String helber;
 }

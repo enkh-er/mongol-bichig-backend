@@ -43,10 +43,10 @@ public class DasgalController {
     }
 
     @GetMapping("/dasgal-code/{code}")
-    public Dasgal getDByCode(@PathVariable String code){
+    public List<Dasgal> getDByCode(@PathVariable String code){
         Query query=new Query();
         query.addCriteria(Criteria.where("code").is(code));
-        return mongoTemplate.findOne(query,Dasgal.class);
+        return mongoTemplate.find(query,Dasgal.class);
     }
 
 }
