@@ -3,18 +3,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>stud.enkherdene</groupId>
+    <artifactId>mongolbichig</artifactId>
+
+    <packaging>jar</packaging>
+
+    <version>1.0.0</version>
+    <name>mongolbichig</name>
+    <url>http://maven.apache.org</url>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.5.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-
-    <groupId>stud.enkherdene</groupId>
-    <artifactId>mongolbichig</artifactId>
-    <version>0.0.1</version>
-    <name>mongolbichig</name>
-    <packaging>jar</packaging>
 
     <description>mongolbichig</description>
     <properties>
@@ -78,6 +81,7 @@
     </dependencies>
 
     <build>
+        <finalName>mongolbichig</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -89,6 +93,23 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <!-- DO NOT include log4j.properties file in your Jar -->
+                    <excludes>
+                        <exclude>**/log4j.properties</exclude>
+                    </excludes>
+                    <archive>
+                        <manifest>
+                            <!-- Jar file entry point -->
+                            <mainClass>com.mkyong.core.utils.App</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
